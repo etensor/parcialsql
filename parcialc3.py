@@ -27,8 +27,7 @@ def exec_query(query, mod=True):
 
 
 st.title('Parcial Corte 3: postgreSQL')
-st.subheader('''\n
-muchas gracias profesor.\n - David Penilla | 69675 ''')
+st.subheader('''\n\n - David Penilla | 69675 ''')
 
 
 
