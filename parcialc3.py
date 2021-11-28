@@ -39,15 +39,15 @@ c = st.container()
 d = st.container()
 e = st.container()
 
-query_a = exec_query('''
+sql_a = r'''
 
 select * from jugadores
 where 'utilidad'=all(roles)
 or clase='utilidad'
 order by puntuacion
-''')
+'''
 
-query_b = exec_query('''
+sql_b = r'''
 
 select nombre into temp no_defensores from jugadores 
 where clase <> 'defensor';
@@ -60,9 +60,9 @@ and player3(equipo_a) in (select * from no_defensores)
 and player1(equipo_b) in (select * from no_defensores)
 and player2(equipo_b) in (select * from no_defensores)
 and player3(equipo_b) in (select * from no_defensores);
-''')
+'''
 
-query_c = exec_query('''
+sql_c = r'''
 
 select * from jugadores 
 where clase = (select clase from jugadores where nombre = 'Mario')
@@ -70,43 +70,54 @@ or cast (clase as character varying) =
 any(cast 
     ((select roles from jugadores where nombre = 'Mario') 
     as character varying[]));
-''')
+'''
 
-query_d = exec_query('''
+sql_d = r'''
 
 select * from atacante inner join jugadores on atacante.id = jugadores.id
 where tipo_arma = 'rango largo' order by puntuacion;
-''')
+'''
 
-query_e = exec_query('''
+sql_e = r'''
 
 select * from jugadores where puntuacion = 
 (select max(puntuacion) from jugadores);
-''')
+'''
+
+query_a = exec_query(sql_a)
+query_b = exec_query(sql_b)
+query_c = exec_query(sql_c)
+query_d = exec_query(sql_d)
+query_e = exec_query(sql_e)
 
 with a:
     with st.expander('1. ¿Qué jugadores juegan más de utilidad?',True):
+        st.code(sql_a,language='sql')
         st.dataframe(pd.DataFrame(query_a,
         columns = {'nombre','correo','premium','clase','id','puntuacion','roles'}))
 
 
 with b:
     with st.expander('2. Qué partidas tienen jugadores que no juega de defensa',True):
+        st.code(sql_b, language='sql')
         st.dataframe(pd.DataFrame(query_b,
         columns = {'equipo_a','equipo_b','id','puntajes','id_equipo_a','id_equipo_b'}))
 
 with c:
     with st.expander('3. Qué jugadores juegan en todos los roles que juega el jugador Mario',True):
+        st.code(sql_c, language='sql')
         st.dataframe(pd.DataFrame(query_c,
         columns = {'nombre','correo','premium','clase','id','puntuacion','roles'}))
 
 with d:
     with st.expander('4. Qué jugadores juegan más con armas de largo alcance', True):
+        st.code(sql_d, language='sql')
         st.dataframe(pd.DataFrame(query_d))
         #columns = {'tipo_arma','damage','poder_especial','id','nombre','correo','premium','clase','id','puntuacion','roles'}))
 
 with e:
     with st.expander('5. ¿Qué jugadores tienen el puntaje del jugador que más puntos tiene actualmente en la base de datos? ', True):
+        st.code(sql_e, language='sql')
         st.dataframe(pd.DataFrame(query_e,
         columns = {'nombre','correo','premium','clase','id','puntuacion','roles'}))
 
