@@ -94,32 +94,32 @@ with a:
     with st.expander('1. ¿Qué jugadores juegan más de utilidad?',True):
         st.code(sql_a,language='sql')
         st.dataframe(pd.DataFrame(query_a,
-        columns = {'nombre','correo','premium','clase','id','puntuacion','roles'}))
+        columns = ['nombre','correo','premium','clase','id','puntuacion','roles']))
 
 
 with b:
     with st.expander('2. Qué partidas tienen jugadores que no juega de defensa',True):
         st.code(sql_b, language='sql')
         st.dataframe(pd.DataFrame(query_b,
-        columns = {'equipo_a','equipo_b','id','puntajes','id_equipo_a','id_equipo_b'}))
+        columns = ['equipo_a','equipo_b','id','puntajes','id_equipo_a','id_equipo_b']))
 
 with c:
     with st.expander('3. Qué jugadores juegan en todos los roles que juega el jugador Mario',True):
         st.code(sql_c, language='sql')
         st.dataframe(pd.DataFrame(query_c,
-        columns = {'nombre','correo','premium','clase','id','puntuacion','roles'}))
+        columns = ['nombre','correo','premium','clase','id','puntuacion','roles']))
 
 with d:
     with st.expander('4. Qué jugadores juegan más con armas de largo alcance', True):
         st.code(sql_d, language='sql')
-        st.dataframe(pd.DataFrame(query_d))
-        #columns = {'tipo_arma','damage','poder_especial','id','nombre','correo','premium','clase','id','puntuacion','roles'}))
+        st.dataframe(pd.DataFrame(query_d,
+        columns = ['tipo_arma','damage','poder_especial','id','nombre','correo','premium','clase','idx','puntuacion','roles'] ))
 
 with e:
     with st.expander('5. ¿Qué jugadores tienen el puntaje del jugador que más puntos tiene actualmente en la base de datos? ', True):
         st.code(sql_e, language='sql')
         st.dataframe(pd.DataFrame(query_e,
-        columns = {'nombre','correo','premium','clase','id','puntuacion','roles'}))
+        columns = ['nombre','correo','premium','clase','id','puntuacion','roles']))
 
 st.subheader('2. Triggers implementados: ')
 
